@@ -117,27 +117,29 @@ if ! shopt -oq posix; then
 fi
 
 # TOS configuration
-alias cdw='cd /home/lsj/work/'
-alias cds='cd /home/lsj/work/trunk/src/'
-alias cdp='cd /home/lsj/work/trunk/pkg/'
-alias cdl='cd /home/lsj/work/trunk/src/lib'
-alias cdb='cd /home/lsj/work/trunk/src/bin'
-alias cdn='cd /home/lsj/work/trunk/src/bin/network'
-alias cdi='cd /home/lsj/work/trunk/src/app/installer'
-alias cdc='cd /home/lsj/work/trunk/src/bin/control_panel'
-alias cdr='cd /home/lsj/work/trunk/src/boot/env_linux/root/'
+export WORK_HOME="/root/work"
+export TOS_HOME="trunk"
+alias cdw='cd ${WORK_HOME}'
+alias cds='cd ${WORK_HOME}/${TOS_HOME}/src/'
+alias cdp='cd ${WORK_HOME}/${TOS_HOME}/pkg/'
+alias cdl='cd ${WORK_HOME}/${TOS_HOME}/src/lib'
+alias cdb='cd ${WORK_HOME}/${TOS_HOME}/src/bin'
+alias cdn='cd ${WORK_HOME}/${TOS_HOME}/src/bin/network'
+alias cdc='cd ${WORK_HOME}/${TOS_HOME}/src/bin/control_panel'
+alias cdi='cd ${WORK_HOME}/${TOS_HOME}/src/app/installer'
+alias cdi='cd ${WORK_HOME}/${TOS_HOME}/src/boot/env_linux_root/'
 
 # Wine
-alias wine='cd /home/lsj/work/source/Wine-2.0.2'
+alias wine='cd ${WORK_HOME}/source/Wine-2.0.2'
 alias hnc='cd /tos/Program Files/Hnc/Hwp80'
 
 # 호환
-alias winlib='cd /home/lsj/work/trunk/src/toc/src/lib/tuk2/wininet'
-alias windll='cd /home/lsj/work/trunk/src/toc/src/dlls/sk/wininet'
-alias toc='cd /home/lsj/work/trunk/src/toc/src'
-alias tocinc='cd /home/lsj/work/trunk/src/toc/src/include'
-alias toccore='cd /home/lsj/work/trunk/src/toc/src/lib/core'
-alias tocbuild='cd /home/lsj/work/trunk/src/toc/build/debug'
+alias winlib='cd ${WORK_HOME}/${TOS_HOME}/src/toc/src/lib/tuk2/wininet'
+alias windll='cd ${WORK_HOME}/${TOS_HOME}/src/toc/src/dlls/sk/wininet'
+alias toc='cd ${WORK_HOME}/${TOS_HOME}/src/toc/src'
+alias tocinc='cd ${WORK_HOME}/${TOS_HOME}/src/toc/src/include'
+alias toccore='cd ${WORK_HOME}/${TOS_HOME}/src/toc/src/lib/core'
+alias tocbuild='cd ${WORK_HOME}/${TOS_HOME}/src/toc/build/debug'
 
 # 기본종료
 alias rb='shutdown -r now'
