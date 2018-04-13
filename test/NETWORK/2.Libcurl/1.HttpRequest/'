@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct MemInfo {
+	char *memory;
+	size_t size;
+};
+
+static size_t MyCallback(void *contents, size_t size, size_t nmemb, void* userp) {
+	size_t realsize = size * nmemb;
+	struct MemInfo *info = (struct MemInfo *)userp;
+	fprintf(stdout, "realsize : %d\n", realsize);
+	fprintf(stdout, "memsize : %d\n", info->size);
+	fprintf(stdout, "contents : %s\n", contents);
+	fprintf(stdout, "memory : %s\n", info->memory);
+}
+
+int main() {
+	CURL *curl_handle;
+	CURLcode res;
+
+	struct MemInfo chunk;
+	return 0;
+}

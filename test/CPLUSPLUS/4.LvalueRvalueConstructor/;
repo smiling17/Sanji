@@ -1,0 +1,8 @@
+#include <iostream>
+#include <string>
+
+class MyInfo {
+	public:
+	private:
+		std::string name;
+};

@@ -1,0 +1,60 @@
+#!/bin/bash
+
+CYAN="\e[1;36m"
+GREEN="\e[1;32m"
+RED="\e[0;31m"
+END="\e[0m"
+
+# Objective
+# - Independant on Networkd (TOS), Zone(lxc), Networking(ifupdown)
+# - Flexable Network Environ
+# - 
+#
+# Consideration
+# - Ethernet name : limit length
+# -  
+# -  
+#
+# Working 
+# 1) Check tosnet envriron (/etc/default/tosnet)
+# 2) Lxc-net enable / disable
+# 3) Set systemd dependancy : networkd -> networking -> lxc-net -> lxc
+# 4) Create
+#
+# TODO
+# - bash shell script -> python?
+
+# default value
+TOSNET_TYPE="default"
+
+# [1] For Host (Super Zone)
+
+# path : /etc/default/tosnet
+# value : default / nat / none
+check_tosnet_environ() {
+
+}
+
+set_lxcbr_environ() {
+}
+
+create_tosnet_bridge() {
+	# wired device + PCI
+	# create bridge
+}
+
+# For Guest (Normal/Secure Zone)
+enable_host_networking() {
+}
+
+set_guest_network() {
+}
+
+
+
+flush_zone_network_conf() {
+	# create zone.network.conf
+	# case : none / empty
+}
+
+

@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <wchar.h>
+
+int main() {
+	int r = 1;
+	wchar_t *myChar = "test\n";
+	wchar_t char2 = 'T';
+	fprintf(stdout, "===== test start =====\n");
+	r = wprintf(L"wprintf test : %ls\n", myChar);
+	r = wprintf(L"wprintf test : %lc\n", char2);
+	fprintf(stdout, "wprintf return : %d\n", r);
+	fprintf(stdout, "===== test end =====\n");
+	return 0;
+}

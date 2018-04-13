@@ -1,0 +1,3 @@
+/home/lsj/work/test/NETWORK/5.WININET/CMakeFiles/edit_cache.dir
+/home/lsj/work/test/NETWORK/5.WININET/CMakeFiles/rebuild_cache.dir
+/home/lsj/work/test/NETWORK/5.WININET/CMakeFiles/wininet.dir
