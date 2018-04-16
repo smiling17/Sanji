@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/root/work/sanji/devel/6.WpasuplicnatLibrary/main.c
+wpa_ctrl.h
+/root/work/sanji/devel/6.WpasuplicnatLibrary/wpa_ctrl.h
+
+/root/work/sanji/devel/6.WpasuplicnatLibrary/wpa_ctrl.h
+stdio.h
+-
+

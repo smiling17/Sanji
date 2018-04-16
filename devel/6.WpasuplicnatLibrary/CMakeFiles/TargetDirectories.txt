@@ -1,0 +1,3 @@
+/root/work/sanji/devel/6.WpasuplicnatLibrary/CMakeFiles/rebuild_cache.dir
+/root/work/sanji/devel/6.WpasuplicnatLibrary/CMakeFiles/a.out.dir
+/root/work/sanji/devel/6.WpasuplicnatLibrary/CMakeFiles/edit_cache.dir
