@@ -5,10 +5,10 @@ GREEN="\e[1;32m"
 RED="\e[0;31m"
 END="\e[0m"
 
-TOS_SRC="/home/lsj/work/trunk/src"
-TOS_TOP="/home/lsj/work/trunk/src"
-TOC="/home/lsj/work/trunk/src/toc"
-TOS_PKG="/home/lsj/work/trunk/pkg"
+TOS_TOP="/root/work/trunk"
+TOS_SRC="${TOS_TOP}/src"
+TOS_PKG="${TOS_TOP}/pkg"
+TOC="${TOS_TOP}/src/toc"
 TOS_PKG_SH="install_linux_pkg.sh"
 INIT_DIR="/system /windata /rsmdata"
 
@@ -34,16 +34,15 @@ init_tos_dir() {
 make_install_toc() {
   echo -e "${GREEN} TOC 호환 디렉토리 설치전 클린작업을  시작합니다. ${END}"
   sleep 2
-  cd $TOC
-  cd ./build/debug
+  cd $TOC/build/debug
   ninja clean
   echo -e "${GREEN} TOC 호환 디렉토리 설치전 init.py를 시작합니다. ${END}"
   sleep 2
-  cd ..
+  cd $TOC/build
   ./init.py
   echo -e "${GREEN} TOC 호환 디렉토리 빌드를  시작합니다. ${END}"
   sleep 2
-  cd ./debug
+  cd $TOC/build/debug
   ninja
   echo -e "${GREEN} TOC 호환 디렉토리 인스톨을  시작합니다. ${END}"
   ninja install
@@ -75,7 +74,7 @@ case "$1" in
 	-a)
 		clean_and_refresh_dir
 		make_install_tos
-		make_install_toc
+		#make_install_toc
 		;;
 	-t)
 		make_install_toc

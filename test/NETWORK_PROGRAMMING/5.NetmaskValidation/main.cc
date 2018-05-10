@@ -6,13 +6,13 @@ unsigned int stringToInt(const char *netmask) {
 	int comma = -1, addr_part = -1;
 	unsigned int addr = 0;
 	while ((comma = netmask_str.find_first_of(".")) != std::string::npos) {
-		fprintf(stdout, "COMMA find : %d\n", comma);
+//		fprintf(stdout, "COMMA find : %d\n", comma);
 		addr <<= 8;
 		addr_part = std::stoi(netmask_str.substr(0, comma));
 		addr |= addr_part;
 		netmask_str = netmask_str.substr(comma+1);
 	}
-	fprintf(stdout, "COMMA END\n");
+//	fprintf(stdout, "COMMA END\n");
 	addr = addr << 8;
 	addr_part = std::stoi(netmask_str);
 	addr |= addr_part;
@@ -20,12 +20,22 @@ unsigned int stringToInt(const char *netmask) {
 	return addr;
 }
 
-bool isValidNetmask(unsigned int netmask) {
+bool isValidNetmask(unsigned int mask) {
+  /* beautiful code */
+  if (mask == 0) return false;
+  if (mask & (~mask >> 1)) {
+    return false;
+  }
+  else {
+    return true;
+  }
+  return true;
+#if 0
 	bool mask_start = false;
 	int count = 0;
 	do {
 		++count;
-		if (netmask & 1) {
+		if (netmask & 0) {
 			if (!mask_start) {
 				mask_start = true;
 				continue;
@@ -42,6 +52,7 @@ bool isValidNetmask(unsigned int netmask) {
 	while ((netmask >>= 1) != 0);
 	fprintf(stdout, "count : %d\n", count);
 	return true;
+#endif
 }
 
 int main () {
