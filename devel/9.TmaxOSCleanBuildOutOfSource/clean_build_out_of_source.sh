@@ -48,6 +48,7 @@ make_install_toc() {
   sleep 2
   cd $TOC/build
   ./init.py
+  git submodule update
   echo -e "${GREEN}TOC 호환 디렉토리 빌드를  시작합니다. ${END}"
   sleep 2
   cd $TOC/build/debug
