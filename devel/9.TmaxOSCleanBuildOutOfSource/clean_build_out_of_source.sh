@@ -8,7 +8,7 @@ END="\e[0m"
 HOME_DIR="/root"
 BUILD_DEBUG_TOP="${HOME_DIR}/tos_build/binary_debug"
 BUILD_RELEASE_TOP="${HOME_DIR}/tos_build/binary_debug"
-TOS_TOP="/root/work/trunk"
+TOS_TOP="/trunk"
 TOS_SRC="${TOS_TOP}/src"
 TOS_PKG="${TOS_TOP}/pkg"
 TOC="${TOS_TOP}/src/toc"
@@ -72,6 +72,8 @@ make_install_tos() {
   ./${INIT_DEBUG}
   print_current_dir
   #cmake . -DCMAKE_BUILD_TYPE=Debug # change from 18.04.17
+  cd ${BUILD_DEBUG_TOP}/src/common
+  make -j
   cd ${BUILD_DEBUG_TOP}
   make -j
   echo -e "${GREEN}SRC내 인스톨을 시작합니다. ${END}"

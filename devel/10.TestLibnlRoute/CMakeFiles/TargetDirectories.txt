@@ -1,0 +1,3 @@
+/sanji/devel/10.TestLibnlRoute/CMakeFiles/rebuild_cache.dir
+/sanji/devel/10.TestLibnlRoute/CMakeFiles/a.out.dir
+/sanji/devel/10.TestLibnlRoute/CMakeFiles/edit_cache.dir

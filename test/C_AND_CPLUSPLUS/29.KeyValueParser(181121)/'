@@ -1,0 +1,30 @@
+#include <string>
+#include <map>
+#include <sstream>
+
+#define CONFIG "/etc/default/tnetd"
+
+class ConfigParser {
+	public:
+		using ConfigMap = std::map<std::string, std::string>;
+		ConfigParser() {
+		}
+		void printParser();
+
+	private:
+		void loadConfig();
+
+	private:
+		ConfigMap map_;
+};
+
+void ConfigParser::loadConfig() {
+	std::ifstream infile(CONFIG);
+	std::string line;
+	map_.clear();
+}
+
+
+int main () {
+	return 0;
+}
