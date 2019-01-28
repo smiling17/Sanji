@@ -7,8 +7,10 @@ END="\e[0m"
 
 HOME_DIR="/root"
 BUILD_DEBUG_TOP="${HOME_DIR}/tos_build/binary_debug"
-BUILD_RELEASE_TOP="${HOME_DIR}/tos_build/binary_debug"
-TOS_TOP="/trunk"
+BUILD_DEBUG_TOC_TOP="${HOME_DIR}/toc_build/binary_debug"
+BUILD_RELEASE_TOP="${HOME_DIR}/tos_build/binary_release"
+BUILD_RELEASE_TOC_TOP="${HOME_DIR}/toc_build/binary_release"
+TOS_TOP="/work/source/TmaxOS"
 TOS_SRC="${TOS_TOP}/src"
 TOS_PKG="${TOS_TOP}/pkg"
 TOC="${TOS_TOP}/src/toc"
@@ -41,20 +43,20 @@ init_tos_dir() {
 
 make_install_toc() {
   echo -e "${GREEN}TOC 호환 디렉토리 설치전 클린작업을  시작합니다. ${END}"
+  cd ${BUILD_DEBUG_TOC_TOP}
+  make clean-all
   sleep 2
-  cd $TOC/build/debug
-  ninja clean
   echo -e "${GREEN}TOC 호환 디렉토리 설치전 init.py를 시작합니다. ${END}"
   sleep 2
   cd $TOC/build
-  ./init.py
+  ./init_debug.sh
   git submodule update
   echo -e "${GREEN}TOC 호환 디렉토리 빌드를  시작합니다. ${END}"
   sleep 2
-  cd $TOC/build/debug
-  ninja
+  cd ${BUILD_DEBUG_TOC_TOP}
+  make -j
   echo -e "${GREEN}TOC 호환 디렉토리 인스톨을  시작합니다. ${END}"
-  ninja install
+  make install -j
 }
 
 make_install_tos() {
