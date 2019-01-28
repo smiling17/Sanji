@@ -8,3 +8,4 @@ do
 	cp $ENV ${USER_PATH}${ENV}
 done
 
+source ${USER_PATH}".bashrc"
