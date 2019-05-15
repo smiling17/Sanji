@@ -117,8 +117,8 @@ if ! shopt -oq posix; then
 fi
 
 # TOS configuration
-export WORK_HOME="/root/work"
-export TOS_HOME="trunk"
+export WORK_HOME="/work"
+export TOS_HOME="/source/trunk"
 alias cdw='cd ${WORK_HOME}'
 alias cds='cd ${WORK_HOME}/${TOS_HOME}/src/'
 alias cdp='cd ${WORK_HOME}/${TOS_HOME}/pkg/'
