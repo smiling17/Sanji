@@ -27,9 +27,8 @@ clean_and_refresh_dir() {
   echo -e "${GREEN}make clean을 실행합니다. ${END}"
   sleep 2
   cd ${BUILD_DEBUG_TOP} && make clean-all
-  # git clean -fdx
   echo -e "${GREEN}기존 디렉토리를 지우고 새로 생성합니다. ${END}"
-  sleep 5
+  sleep 2
   init_tos_dir
 }
 
@@ -45,11 +44,10 @@ make_install_toc() {
   echo -e "${GREEN}TOC 호환 디렉토리 설치전 클린작업을  시작합니다. ${END}"
   cd ${BUILD_DEBUG_TOC_TOP}
   make clean-all
-  sleep 2
   echo -e "${GREEN}TOC 호환 디렉토리 설치전 init.py를 시작합니다. ${END}"
   sleep 2
   cd $TOC/build
-  ./init_release.sh
+  ./init_debug.sh
   git submodule update
   echo -e "${GREEN}TOC 호환 디렉토리 빌드를  시작합니다. ${END}"
   sleep 2
@@ -67,19 +65,19 @@ make_install_tos() {
   echo -e "${GREEN}SRC내 빌드를 시작합니다. ${END}"
   sleep 2
   cd $TOS_TOP # change from 18.04.17 
-  print_current_dir
   cp config.cmake.eg config.cmake
   cd ./build
-  ./${INIT_RELEASE}
-  print_current_dir
+  ./${INIT_DEBUG}
   #cmake . -DCMAKE_BUILD_TYPE=Debug # change from 18.04.17
   cd ${BUILD_RELEASE_TOP}/src/core
   make install -j
   cd ${BUILD_RELEASE_TOP}/src/common
   make install -j
+  cd ${BUILD_RELEASE_TOP}/src/lib/tgk
+  make install -j
   cd ${BUILD_RELEASE_TOP}/src/lib
   make install -j
-  echo -e "${GREEN}SRC내 인스톨을 시작합니다. ${END}"
+  echo -e "${GREEN}최상위 인스톨을 시작합니다. ${END}"
   sleep 2
   cd ${BUILD_RELEASE_TOP}
   make install -j
