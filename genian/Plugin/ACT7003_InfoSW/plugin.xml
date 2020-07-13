@@ -1,0 +1,34 @@
+<genian-plugin key="7003" name="소프트웨어정보 수집" name_en="Collect Software Information">
+	<plugin-info>
+		<description>설치된 소프트웨어정보를 수집하여 노드정보의 [소프트웨어정보]-[소프트웨어목록]에 표시합니다.</description>
+		<description_en>Collects information about all installed software on the system.</description_en>
+		<version>1.0.0.73727</version>
+		<vendor name="지니언스(주)" name_en="GENIANS, INC." url="http://www.genians.com/" />
+		<support-osid>10000,11000,12000,14000,15000,16000</support-osid>
+		<support-language>9,18</support-language>
+		<file name="" />
+		<permanent>0</permanent>
+		<noversioncheck>1</noversioncheck>
+		<noagentcheck>1</noagentcheck>
+		<multiprocess>0</multiprocess>
+		<needlicense>NAC</needlicense>
+		<licenseperm>0</licenseperm>
+		<ostype>2</ostype>
+		<type>1</type>
+	</plugin-info>
+	<install-query><![CDATA[
+		INSERT INTO `CONF`
+			(CONF_CATGRY, CONF_KEY, CONF_TYPE, CONF_VALUE, CONF_DISP, CONF_UNITDISP, CONF_ORDER, CONF_DESC, CONF_HELP, CONF_OPTIONS, CONF_WIDTH, CONF_LEN, CONF_MIN, CONF_MAX, CONF_PARENT_KEY, CONF_PARENT_VALUE, CONF_REFLINK, CONF_VISIBLE, CONF_ISSTATIC, CONF_LICENSEPERMVALUE)
+		VALUES
+			('ACT7003', 'ACT7003-NODELINE', '99', '', '별도의 설정이 필요 없는 플러그인 입니다.', null, '1', null, null, null, null, null, null, null, null, null, null, '1', '0', '0');
+
+		INSERT INTO `CONF_Bundle_en`
+			(CONF_CATGRY, CONF_KEY, CONF_DISP, CONF_UNITDISP, CONF_DESC, CONF_ISSTATIC)
+		VALUES
+			('ACT7003', 'ACT7003-NODELINE', 'No Configuration Required', '', '', '0');
+	]]></install-query>
+	<remove-query><![CDATA[
+		DELETE FROM `CONF` WHERE CONF_CATGRY = 'ACT7003';
+		DELETE FROM `CONF_Bundle_en` WHERE CONF_CATGRY = 'ACT7003';
+	]]></remove-query>
+</genian-plugin>

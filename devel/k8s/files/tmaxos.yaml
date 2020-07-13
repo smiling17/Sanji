@@ -1,0 +1,189 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tmaxos
+  labels:
+    app: tmaxos
+spec:
+  shareProcessNamespace: true
+  containers:
+  - name: packagemanager
+    image: tmaxos:3.11.2
+    command: ['/system/bin/package_manager']
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      privileged: true
+    env:
+    - name: SHELL
+      value: "/bin/bash"
+    - name: "LANG"
+      value: "ko_KR.UTF-8"
+    - name: HOME
+      value: "/root"
+    - name: LOGNAME
+      value: "root"
+    - name: USER
+      value: "root"
+    volumeMounts:
+    - name: dbus
+      mountPath: /run/dbus
+    - name: home
+      mountPath: /home/a
+    - name: roothome
+      mountPath: /root
+    - name: etc
+      mountPath: /etc
+    - name: rsmdata
+      mountPath: /rsmdata
+    - name: runzonechild
+      mountPath: /run/zone/child
+
+  - name: applauncher
+    image: tmaxos:3.11.2
+    command: ['/system/bin/application_launcher']
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      privileged: true
+    env:
+    - name: SHELL
+      value: "/bin/bash"
+    - name: "LANG"
+      value: "ko_KR.UTF-8"
+    - name: HOME
+      value: "/root"
+    - name: LOGNAME
+      value: "root"
+    - name: USER
+      value: "root"
+    volumeMounts:
+    - name: dbus
+      mountPath: /run/dbus
+    - name: home
+      mountPath: /home/a
+    - name: roothome
+      mountPath: /root
+    - name: etc
+      mountPath: /etc
+    - name: rsmdata
+      mountPath: /rsmdata
+    - name: runzonechild
+      mountPath: /run/zone/child
+
+  - name: appmanager
+    image: tmaxos:3.11.2
+    command: ['/system/bin/application_manager']
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      privileged: true
+    env:
+    - name: SHELL
+      value: "/bin/bash"
+    - name: "LANG"
+      value: "ko_KR.UTF-8"
+    volumeMounts:
+    - name: dbus
+      mountPath: /run/dbus
+    - name: home
+      mountPath: /home/a
+    - name: roothome
+      mountPath: /root
+    - name: etc
+      mountPath: /etc
+    - name: rsmdata
+      mountPath: /rsmdata
+    - name: runzonechild
+      mountPath: /run/zone/child
+
+  - name: shell
+    image: tmaxos:3.11.2
+    command: ['/system/bin/session-daemon', '--init']
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 998
+      privileged: true
+    env:
+    - name: SHELL
+      value: "/bin/bash"
+    - name: HOME
+      value: "/home/a"
+    - name: DISPLAY
+      value: ":1000"
+    - name: LOGNAME
+      value: "a"
+    - name: USER
+      value: "a"
+    - name: "LANG"
+      value: "ko_KR.UTF-8"
+    - name: "LC_ALL"
+      value: "ko_KR.UTF-8"
+    - name: XDG_RUNTIME_DIR
+      value: "/run/user/1000"
+    - name: DBUS_SESSION_BUS_ADDRESS
+      value: "unix:path=/run/user/1000/bus"
+    volumeMounts:
+    - name: dbus
+      mountPath: /run/dbus
+    - name: registry
+      mountPath: /.registry
+    - name: runzonechild
+      mountPath: /run/zone/child
+    - name: session
+      mountPath: /run/user/1000
+    - name: home
+      mountPath: /home/a
+    - name: roothome
+      mountPath: /root
+    - name: glogin
+      mountPath: /var/glogin
+    - name: devices
+      mountPath: /dev/dri
+    - name: etc
+      mountPath: /etc
+    - name: rsmdata
+      mountPath: /rsmdata
+
+  restartPolicy: Never
+  volumes:
+  - name: home
+    hostPath:
+      path: /home/a
+  - name: roothome
+    hostPath:
+      path: /root
+  - name: run
+    hostPath:
+      path: /run
+  - name: dbus
+    hostPath:
+      path: /var/run/dbus
+  - name: registry
+    hostPath:
+      path: /.registry
+  - name: rsmdata
+    hostPath:
+      path: /rsmdata
+  - name: glogin
+    hostPath:
+      path: /var/glogin
+  - name: runzonechild
+    hostPath:
+      path: /run/zone/child
+  - name: session
+    hostPath:
+      path: /run/user/1000
+  - name: devices
+    hostPath:
+      path: /dev/dri
+  - name: tmp
+    hostPath:
+      path: /tmp
+  - name: etc
+    hostPath:
+      path: /etc
+  - name: systembin
+    hostPath:
+      path: /system/bin
+

@@ -1,0 +1,85 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:		gnstart.py
+# Required-Start:	$all
+# Required-Stop:
+# Default-Start:	2 3 4 5
+# Default-Stop:	0 1 6
+# Short-Description:	Genians Linux Agent for Ubuntu.
+### END INIT INFO
+
+set -e
+
+AGENT_VENDER_NAME="Geni"
+AGENT_NAME="Genian"
+INSTALL_PATH_PREFIX="/usr/local"
+INSTALL_PATH="${INSTALL_PATH_PREFIX}/${AGENT_VENDER_NAME}"
+
+# /usr/local/Geni/Genian
+HOME_DIR="${INSTALL_PATH}/${AGENT_NAME}"
+
+# /usr/local/Geni/Genian/Agent
+AGENT_PATH="${HOME_DIR}/Agent"
+
+NAME="gnstart.py"
+
+# /usr/local/Geni/Genian/Agent/gnstart.py
+DAEMON="${AGENT_PATH}/${NAME}"
+
+PYTHON=`which python`
+
+CHROOT="${HOME_DIR}"
+
+# /etc/init.d/gnstart: start and stop the "Genian Linux Agent" daemon
+
+test -x "${DAEMON}" || exit 0
+
+if [ ! -d "${CHROOT}" ]; then
+    sudo mkdir -p "${CHROOT}"
+fi
+
+case "${1}" in
+    start)
+        echo "Starting Linux Agent Daemon" "${NAME}"
+
+
+        #
+        # 리눅스 에이전트에서 os.getcwd()로 경로를 추출하기 때문에
+        # 리눅스 에이전트 홈폴더(/usr/loca/Geni/Genian)로 이동 함.
+        #
+
+        cd ${HOME_DIR}
+        sudo @ACCOUNT ${PYTHON} ${DAEMON} &
+        ;;
+
+    stop)
+        echo "Stopping Linux Agent" "${NAME}"
+        cd ${HOME_DIR}
+        PID=`ps -ef | grep gnstart.py | grep -v grep | awk '{print $2}'`
+
+        for i in $PID; do
+            kill -9 $i
+            echo $i killed
+        done
+
+        PID=`ps -ef | grep gnagent.py | grep -v grep | awk '{print $2}'`
+        for i in $PID; do
+            kill -9 $i
+            echo $i killed
+        done
+        ;;
+
+    restart)
+        ${0} stop
+        sleep 1
+        ${0} start
+        ;;
+
+    *)
+        echo "Usage: ${0} {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0

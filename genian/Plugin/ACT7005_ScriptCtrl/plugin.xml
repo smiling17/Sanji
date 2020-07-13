@@ -1,0 +1,58 @@
+<genian-plugin key="7005" name="스크립트 수행" name_en="Run Script">
+	<plugin-info>
+		<description>shell 스크립트를 수행합니다.</description>
+		<description_en>Runs a shell script.</description_en>
+		<version>1.0.0.73727</version>
+		<vendor name="지니언스(주)" name_en="GENIANS, INC." url="http://www.genians.com/" />
+		<support-osid>10000,11000,12000,14000,15000,16000</support-osid>
+		<support-language>9,18</support-language>
+		<file name="" />
+		<permanent>0</permanent>
+		<noversioncheck>1</noversioncheck>
+		<noagentcheck>1</noagentcheck>
+		<multiprocess>1</multiprocess>
+		<needlicense>NAC</needlicense>
+		<licenseperm>0</licenseperm>
+		<ostype>2</ostype>
+		<type>1</type>
+	</plugin-info>
+	<install-query><![CDATA[
+		INSERT INTO `CONF`
+			(CONF_CATGRY, CONF_KEY, CONF_TYPE, CONF_VALUE, CONF_DISP, CONF_UNITDISP, CONF_ORDER, CONF_DESC, CONF_HELP, CONF_OPTIONS, CONF_WIDTH, CONF_LEN, CONF_MIN, CONF_MAX, CONF_PARENT_KEY, CONF_PARENT_VALUE, CONF_REFLINK, CONF_VISIBLE, CONF_ISSTATIC, CONF_LICENSEPERMVALUE)
+		VALUES
+			('ACT7005', 'ACT7005-COMMAND', '0', 'ps', '수행 명령어', NULL, '1', NULL, NULL, 'ACT7005-COMMAND_LIST', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '0', '0'),
+			('ACT7005', 'ACT7005-PSCMD_OPTION', '0', '-eTo pid,spid,ppid,stat,user,c,pmem,sz,vsz,rss,tname,lstart,time,cmd', '옵션', NULL, '102', 'ps명령어 수행 옵션을 설정합니다.', NULL, NULL, 500, NULL, NULL, NULL, 'ACT7005-COMMAND', 'ps', NULL, '1', '0', '0'),
+			('ACT7005', 'ACT7005-NETSTAT_OPTION', '0', '-an', '옵션', NULL, '202', 'netstat명령어 수행 옵션을 설정합니다.', NULL, NULL, 500, NULL, NULL, NULL, 'ACT7005-COMMAND', 'netstat', NULL, '1', '0', '0'),
+			('ACT7005', 'ACT7005-ALWAYSSEND', '0', '0', '수행결과 전송', NULL, '900', '수행결과를 항상 전송하지만, 이전결과와 다른 경우에만 전송하도록 설정합니다.', NULL, 'ACT7005-ALWAYSSEND_TYPE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '0', '0');
+
+		INSERT INTO `CONF_Bundle_en`
+			(CONF_CATGRY, CONF_KEY, CONF_DISP, CONF_UNITDISP, CONF_DESC, CONF_ISSTATIC)
+		VALUES
+			('ACT7005', 'ACT7005-COMMAND', 'Shell Command', '', '', '0'),
+			('ACT7005', 'ACT7005-PSCMD_OPTION', 'Option(s)', NULL, 'Specify option(s) to run ps command.', '0'),
+			('ACT7005', 'ACT7005-NETSTAT_OPTION', 'Option(s)', '', 'Specify option(s) to run netstat command.', '0'),
+			('ACT7005', 'ACT7005-ALWAYSSEND', 'Generating Log', '', 'Specify when to generate a log.', '0');
+
+		INSERT INTO `CONFUI`
+			(CONFUI_ITEM, CONFUI_VALUE, CONFUI_DISP, CONFUI_ORDER, CONFUI_DESC, CONFUI_VISIBLE, CONFUI_ISSTATIC)
+		VALUES
+			('ACT7005-ALWAYSSEND_TYPE', '0', '이전 결과와 다른 경우 전송', '1', NULL, '1', '0'),
+			('ACT7005-ALWAYSSEND_TYPE', '1', '항상 전송', '2', NULL, '1', '0'),
+			('ACT7005-COMMAND_LIST', 'netstat', 'netstat', '2', NULL, '1', '0'),
+			('ACT7005-COMMAND_LIST', 'ps', 'ps', '1', NULL, '1', '0');
+
+		INSERT INTO `CONFUI_Bundle_en`
+			(CONFUI_ITEM, CONFUI_VALUE, CONFUI_DISP, CONFUI_DESC, CONFUI_ISSTATIC)
+		VALUES
+			('ACT7005-ALWAYSSEND_TYPE', '0', 'When changes are made', '', '0'),
+			('ACT7005-ALWAYSSEND_TYPE', '1', 'When it runs', '', '0'),
+			('ACT7005-COMMAND_LIST', 'netstat', 'netstat', '', '0'),
+			('ACT7005-COMMAND_LIST', 'ps', 'ps', '', '0');
+	]]></install-query>
+	<remove-query><![CDATA[
+		DELETE FROM `CONF` WHERE CONF_CATGRY = 'ACT7005';
+		DELETE FROM `CONF_Bundle_en` WHERE CONF_CATGRY = 'ACT7005';
+		DELETE FROM `CONFUI` WHERE CONFUI_ITEM LIKE 'ACT7005%';
+		DELETE FROM `CONFUI_Bundle_en` WHERE CONFUI_ITEM LIKE 'ACT7005%';
+	]]></remove-query>
+</genian-plugin>
