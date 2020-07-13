@@ -10,7 +10,7 @@ BUILD_DEBUG_TOP="${HOME_DIR}/tos_build/binary_debug"
 BUILD_DEBUG_TOC_TOP="${HOME_DIR}/toc_build/binary_debug"
 BUILD_RELEASE_TOP="${HOME_DIR}/tos_build/binary_release"
 BUILD_RELEASE_TOC_TOP="${HOME_DIR}/toc_build/binary_release"
-TOS_TOP="${WORK_HOME}/${TOS_HOE}"
+TOS_TOP="${WORK_HOME}/${TOS_HOME}"
 TOS_SRC="${TOS_TOP}/src"
 TOS_PKG="${TOS_TOP}/pkg"
 TOC="${TOS_TOP}/src/toc"
@@ -20,7 +20,7 @@ TOS_PKG_SH="install_linux_pkg.sh"
 INIT_DIR="/system /windata /rsmdata"
 
 print_current_dir() {
-  echo -e "${GREEN}Current Dir : `pwd`"
+  echo -e "${GREEN}current Dir : `pwd`"
 }
 
 clean_and_refresh_dir() {
@@ -69,17 +69,19 @@ make_install_tos() {
   cd ./build
   ./${INIT_DEBUG}
   #cmake . -DCMAKE_BUILD_TYPE=Debug # change from 18.04.17
-  cd ${BUILD_RELEASE_TOP}/src/core
+  cd ${BUILD_DEBUG_TOP}/src/core
   make install -j
-  cd ${BUILD_RELEASE_TOP}/src/common
+  cd ${BUILD_DEBUG_TOP}/src/common
   make install -j
-  cd ${BUILD_RELEASE_TOP}/src/lib/tgk
+  cd ${BUILD_DEBUG_TOP}/src/lib/tgk
   make install -j
-  cd ${BUILD_RELEASE_TOP}/src/lib
+  cd ${BUILD_DEBUG_TOP}/src/lib
+  make install -j
+  cd ${BUILD_DEBUG_TOP}/src/gk_repo
   make install -j
   echo -e "${GREEN}최상위 인스톨을 시작합니다. ${END}"
   sleep 2
-  cd ${BUILD_RELEASE_TOP}
+  cd ${BUILD_DEBUG_TOP}
   make install -j
 }
 
@@ -93,6 +95,7 @@ case "$1" in
 	-a)
 		clean_and_refresh_dir
 		make_install_tos
+		make_install_toc
 		#make_install_toc /* 64bit X */
 		;;
 	-t)

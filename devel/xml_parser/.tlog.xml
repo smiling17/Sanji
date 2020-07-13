@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tlog>
+  <channel>TLOG_DEFAULT_CHANNEL,DLL,USER32,KERNEL32,SHELL32,NETWORK</channel>
+  <path>/</path>
+  <level>INFO</level>
+  <!--logfile>/var/log/t.log</logfile>
+  <color>false</color-->
+</tlog>
