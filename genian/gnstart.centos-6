@@ -1,0 +1,118 @@
+#!/bin/bash
+
+#
+# Genian Agent auto-start
+#
+# chkconfig: 2345 90 90
+# description: Auto-starts GenianAgent for CentOS
+# processname: gnstart
+# pidfile: /tmp/Genian.pid
+
+### BEGIN INIT INFO
+# Provides: Genian Agent
+# Required-Start: $local_fs $network $syslog
+# Required-Stop: $local_fs $syslog
+# Should-Start: $syslog
+# Should-Stop: $network $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Start up the Genian Agent daemon
+# Description:       This service starts up the Genian Agent Start daemon.
+#                    CentOS 6.x에서 사용하는 자동 실행 스크립트.
+### END INIT INFO$
+
+
+# Source function library.
+. /etc/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+AGENT_VENDER_NAME="Geni"
+AGENT_NAME="Genian"
+INSTALL_PATH_PREFIX="/usr/local"
+INSTALL_PATH="${INSTALL_PATH_PREFIX}/${AGENT_VENDER_NAME}"
+
+# /usr/local/Geni/Genian
+HOME_DIR="${INSTALL_PATH}/${AGENT_NAME}"
+
+# /usr/local/Geni/Genian/Agent
+AGENT_PATH="${HOME_DIR}/Agent"
+
+NAME="gnstart.py"
+
+# /usr/local/Geni/Genian/Agent/gnstart.py
+DAEMON="${AGENT_PATH}/${NAME}"
+
+PATH="${HOME_DIR}:/sbin:/bin:/usr/sbin:/usr/bin"
+
+PYTHON="/usr/bin/python"
+CHROOT="${HOME_DIR}"
+
+PIDFILE="/tmp/${AGENT_NAME}.pid"
+lockfile="/tmp/${AGENT_NAME}.lock"
+
+# /etc/init.d/gnstart: start and stop the "Genian Linux Agent" daemon
+
+test -x "${DAEMON}" || exit 0
+
+if [ ! -d "${CHROOT}" ]; then
+    sudo mkdir -p "${CHROOT}"
+fi
+
+case $1 in
+    start)
+        echo -n "Starting Linux Agent Daemon ${AGENT_NAME}"
+
+        cd ${HOME_DIR}
+
+        #
+        # 계정 정보에 따라서 해당 권한으로 실행으로 됨.
+        #
+
+        daemon @ACCOUNT --pidfile=${PIDFILE} ${PYTHON} $DAEMON
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && touch $lockfile
+        ;;
+
+    stop)
+        echo -n "Stopping Linux Agent ${AGENT_NAME}"
+        killproc -p ${PIDFILE} $DAEMON
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && rm -f $lockfile
+
+        #
+        # killproc()함수로는 관련 프로세스를 모두 kill 할 수 없음.
+        # 아래와 같이 프로세스의 실행 경로의 이름을 찾아서 kill 하는 작업을 추가함.
+        #
+
+        cd ${HOME_DIR}
+        PID=`ps -ef | grep gnstart.py | grep -v grep | awk '{print $2}'`
+
+        for i in $PID; do
+            kill -9 $i
+            echo $i killed
+        done
+
+        PID=`ps -ef | grep gnagent.py | grep -v grep | awk '{print $2}'`
+        for i in $PID; do
+            kill -9 $i
+            echo $i killed
+        done
+        ;;
+
+    restart)
+        ${0} stop
+        sleep 1
+        ${0} start
+        ;;
+
+    *)
+        echo "Usage: ${0} {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
